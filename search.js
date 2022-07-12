@@ -1,6 +1,6 @@
 function CustomSearch(element, options) {
     this.element = element || null;
-    this.url = options?.url || "https://raw.githubusercontent.com/reinowis/mockupdata/main/data1.json";
+    this.url = options?.url || "https://raw.githubusercontent.com/reinowis/auto-suggestion/main/data1.json";
     this.triggerNoKey = options?.triggerNoKey || 1;
     this.blocks = options?.block || ['term', 'collection', 'product'];
     this.triggered = 0;
@@ -79,10 +79,10 @@ CustomSearch.prototype._renderGroup = function (title, data) {
     return group;
 }
 
-CustomSearch.prototype._renderData = function() {
+CustomSearch.prototype._renderData = function(data) {
     const self = this;
     const results = $(`<div></div>`);
-    const data = self?.data;
+    console.log(data);
     results.addClass('custom-search__results');
     console.log(self.blocks);
     self?.blocks?.forEach(function(block) {
@@ -102,11 +102,16 @@ CustomSearch.prototype._triggerData = function () {
         url: self.url,
         dataType: "json",
         success: function (response) {
+            console.log('get');
             if (self.results) {
                 self.results.remove();
             }
-            self.data = response;
+            // self.data = response;
+            console.log(response);
             self._renderData();
+        },
+        error: function(err) {
+            console.log(err);
         }
     });
 }

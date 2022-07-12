@@ -7,7 +7,7 @@
       {
         "term": "consectetur",
         "url": "https://google.com"
-      },
+      }
     ],
     "collection": [
       {
@@ -40,6 +40,6 @@
         "brand": "do",
         "price": "$2,790.75",
         "image": "http://placehold.it/32x32"
-      },
+      }
     ]
   }
