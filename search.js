@@ -79,18 +79,16 @@ CustomSearch.prototype._renderGroup = function (title, data) {
     return group;
 }
 
-CustomSearch.prototype._renderData = function(data) {
+CustomSearch.prototype._renderData = function() {
     const self = this;
     const results = $(`<div></div>`);
-    console.log(data);
     results.addClass('custom-search__results');
-    console.log(self.blocks);
-    self?.blocks?.forEach(function(block) {
-        if (data[block]) {
-            const groupEle = self._renderGroup(block, data[block]);
+    Object.keys(self.data).forEach(function(key) {
+        if (self.blocks.includes(key)) {
+            const groupEle = self._renderGroup(key, self.data[key]);
             results.append(groupEle);
         }
-    });
+    })
     self.results = results;
     self._displayPopup();
     $('body').append(results);
@@ -106,8 +104,7 @@ CustomSearch.prototype._triggerData = function () {
             if (self.results) {
                 self.results.remove();
             }
-            // self.data = response;
-            console.log(response);
+            self.data = response;
             self._renderData();
         },
         error: function(err) {
