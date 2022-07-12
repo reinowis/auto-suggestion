@@ -1,18 +1,20 @@
 <html>
     <head>
-        <link rel="stylesheet" href="search.css">
-        <link rel="stylesheet" href="main.css">
+        <link rel="stylesheet" href="./auto-suggestion/auto-suggestion.css">
+        <link rel="stylesheet" href="./assets/main.css">
     </head>
     <body>
         <div>
             <input type="text" id="search" placeholder="Type to search...">
         </div>
-        <script src="./jquery-3.6.0.min.js"></script>
-        <script src="./search.js"></script>
+        <script src="./assets/jquery-3.6.0.min.js"></script>
+        <script src="./auto-suggestion/auto-suggestion.js"></script>
         <script>
             $(document).ready(function() {
-                $('#search').customSearch({
+                $('#search').autoSuggestion({
                     triggerNoKey: 1,
+                    url: 'https://raw.githubusercontent.com/reinowis/auto-suggestion/main/data/data1.json',
+                    blocks: ['term', 'collection', 'product'],
                 });
             });
         </script>

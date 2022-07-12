@@ -1,0 +1,101 @@
+.auto-suggestion__results {
+    background: #ffffff;
+    min-width: 300px;
+    max-width: 50%;
+    max-height: 500px;
+    display: block;
+    overflow: auto;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+.auto-suggestion__results a {
+    text-decoration: none;
+    color: #000000;
+}
+.auto-suggestion__wrapper {
+    position: relative;
+    width: fit-content;
+}
+.auto-suggestion__clear {
+    position: absolute;
+    right: 10px;
+    top: 0px;
+    width: 15px;
+    height: 15px;
+    text-align: center;
+    line-height: 15px;
+    background: #d9d9d9;
+    border-radius: 100%;
+    top: calc(50% - 7.5px);
+    cursor: pointer;
+    z-index: 1000;
+    font-size: 10px;
+    color: #ffffff;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+.auto-suggestion__results__background {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    z-index: 998;
+    width: 100%;
+    height: 100%;
+}
+.auto-suggestion__results__view-more {
+    padding: 10px 5px;
+    text-align: center;
+    margin: 0px;
+    display: block;
+    background: #eeeeee;
+    text-transform: uppercase;
+    font-size: smaller;
+}
+.auto-suggestion__results__title {
+    text-transform: uppercase;
+    background: #eeeeee;
+    padding: 10px 5px;
+    margin: 0px;
+    font-weight: 300;
+    color: #4e4e4e;
+}
+.auto-suggestion__results__list {
+    list-style: none;
+    padding-left: 0px;
+    margin: 0px;
+}
+.auto-suggestion__results__item {
+    display: flex;
+    padding: 10px 5px;
+}
+.auto-suggestion__results__item--image {
+    border-bottom: solid 0.5px #eeeeee;
+}
+.auto-suggestion__results__item:hover {
+    background: #eeeeee;
+}
+.auto-suggestion__results__item__wrapper {
+    display: flex;
+    width: 100%;
+}
+.auto-suggestion__results__item__image {
+    width: 70px;
+}
+.auto-suggestion__results__item__content {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    padding-left: 5px;
+}
+.auto-suggestion__results__item__content > * {
+    margin-bottom: 3px;
+}
+.auto-suggestion__results__item__title {
+    text-transform: capitalize;
+}
+.auto-suggestion__results__item__subtitle {
+    text-transform: capitalize;
+    font-size: smaller;
+}
+.auto-suggestion__results__item__price {
+    font-weight: bold;
+    font-size: smaller;
+}
