@@ -1,21 +1,26 @@
 .custom-search__results {
-    font-size: 12px;
     background: #ffffff;
-    width: 100%;
     min-width: 300px;
     max-height: 500px;
     display: block;
     overflow: auto;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 .custom-search__results a {
     text-decoration: none;
     color: #000000;
 }
+.custom-search__results__view-more {
+    padding: 10px 5px;
+    text-align: center;
+    margin: 0px;
+    display: block;
+    background: #eeeeee;
+}
 .custom-search__results__title {
-    padding-bottom: 0px;
     text-transform: uppercase;
     background: #eeeeee;
-    padding: 5px 5px;
+    padding: 10px 5px;
     margin: 0px;
 }
 .custom-search__results__list {
@@ -25,7 +30,7 @@
 }
 .custom-search__results__item {
     display: flex;
-    padding: 5px;
+    padding: 10px 5px;
 }
 .custom-search__results__item--image {
     border-bottom: solid 0.5px #eeeeee;
@@ -38,8 +43,7 @@
     width: 100%;
 }
 .custom-search__results__item__image {
-    width: 20px;
-    height: 20px;
+    width: 70px;
 }
 .custom-search__results__item__content {
     display: flex;

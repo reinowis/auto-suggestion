@@ -8,7 +8,16 @@ function CustomSearch(element, options) {
     this.results;
     this._registerEvents();
 }
-CustomSearch.prototype._hidePopup = function (popup) {
+CustomSearch.prototype._destroyPopup = function () {
+    const self = this;
+    if (self.results) {
+        self.results?.remove();
+    }
+    if (self.data) {
+        self.data = {};
+    }
+}
+CustomSearch.prototype._hidePopup = function () {
     const self = this;
     $(self.results).css('display', 'none');
 }
@@ -20,14 +29,16 @@ CustomSearch.prototype._showPopup = function (popup) {
 
 CustomSearch.prototype._displayPopup = function (popup) {
     const self = this;
-    console.log(self.element);
-    $(self.results).css({
-        position: 'fixed',
-        'z-index': 999,
-        top: self.element.offset().top + self.element.height(),
-        left: self.element.offset().left,
-        width: self.element.width()
-    })
+    if (self.results) {
+        $(self.results).css({
+            position: 'fixed',
+            display: 'block',
+            'z-index': 999,
+            top: self.element.offset().top + self.element.height() + 10,
+            left: self.element.offset().left,
+            width: self.element.width()
+        })
+    }
 }
 
 CustomSearch.prototype._renderItem = function (item, type) {
@@ -57,9 +68,6 @@ CustomSearch.prototype._renderItem = function (item, type) {
 CustomSearch.prototype._renderGroup = function (title, data) {
     const self = this;
     const group = $('<div></div>');
-
-    console.log(data);
-    if (title)
     group.addClass('custom-search__results__group');
     
     const groupTitle = $('<h5></h5>');
@@ -79,6 +87,13 @@ CustomSearch.prototype._renderGroup = function (title, data) {
     return group;
 }
 
+CustomSearch.prototype._renderViewMore = function () {
+    const viewMoreEle = $(`<a href='#'></a>`);
+    viewMoreEle.addClass('custom-search__results__view-more');
+    viewMoreEle.text('View all products');
+    return viewMoreEle;
+}
+
 CustomSearch.prototype._renderData = function() {
     const self = this;
     const results = $(`<div></div>`);
@@ -89,9 +104,10 @@ CustomSearch.prototype._renderData = function() {
             results.append(groupEle);
         }
     })
-    self.results = results;
+    results.append(self._renderViewMore());
     self._displayPopup();
     $('body').append(results);
+    self.results = results;
 }
 CustomSearch.prototype._triggerData = function () {
     const self = this;
@@ -100,7 +116,6 @@ CustomSearch.prototype._triggerData = function () {
         url: self.url,
         dataType: "json",
         success: function (response) {
-            console.log('get');
             if (self.results) {
                 self.results.remove();
             }
@@ -125,15 +140,21 @@ CustomSearch.prototype._registerEvents = function() {
     })
     this.element.on('change', function(evt) {
         if (!String(self.element.val())?.length) {
-            self._hidePopup();
+            self._destroyPopup();
         }
     })
     this.element.on('focus', function() {
-        self._showPopup();
+        if (String(self.element.val()).trim().length > 0 && self.data) {
+            self._displayPopup();
+        } else {
+            self._destroyPopup();
+            self._hidePopup();
+        }
+        
     })
-    // this.element.on('blur', function(evt) {
-    //     self._hidePopup();
-    // })
+    this.element.on('blur', function(evt) {
+        self._hidePopup();
+    })
 }
 $.fn.customSearch = function (options) {
     options = options || {};
@@ -141,7 +162,6 @@ $.fn.customSearch = function (options) {
     if (typeof options === 'object') {
         this.each(function () {
             var instanceOptions = $.extend(true, {}, options);
-            console.log($(this));
             var instance = new CustomSearch($(this), instanceOptions);
             return instance;
         });
