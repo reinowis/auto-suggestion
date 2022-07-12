@@ -1,0 +1,45 @@
+{
+    "term": [
+      {
+        "term": "elit",
+        "url": "https://google.com"
+      },
+      {
+        "term": "consectetur",
+        "url": "https://google.com"
+      },
+    ],
+    "collection": [
+      {
+        "id": "62ccf3f48e27ab1306529284",
+        "title": "ad",
+        "url": "https://google.com"
+      }
+    ],
+    "product": [
+      {
+        "id": "62ccf3f4b806b7be9ca275b8",
+        "title": "duis",
+        "url": "https://google.com",
+        "brand": "officia",
+        "price": "$2,160.32",
+        "image": "http://placehold.it/32x32"
+      },
+      {
+        "id": "62ccf3f46925b7b3ab66341d",
+        "title": "labore",
+        "url": "https://google.com",
+        "brand": "velit",
+        "price": "$3,100.01",
+        "image": "http://placehold.it/32x32"
+      },
+      {
+        "id": "62ccf3f4c1bc64fbea0f2354",
+        "title": "est",
+        "url": "https://google.com",
+        "brand": "do",
+        "price": "$2,790.75",
+        "image": "http://placehold.it/32x32"
+      },
+    ]
+  }
