@@ -11,11 +11,11 @@ function AutoSuggestion(element, options) {
     this._key = options.key || 'search';
     this._data = {};
     this._triggered = 0;
-    function _renderItem (item, type) {
+    function _renderItem (item, group) {
         var itemEle = $('<li></li>');
         itemEle.addClass('auto-suggestion__results__item');
         var itemWrapper = $(`<a class='auto-suggestion__results__item__wrapper' href='${item.url}'></a>`);
-        if (type === 'product') {
+        if (group === 'product') {
             itemEle.addClass('auto-suggestion__results__item--image');
             var contentImage = $(`<img class='auto-suggestion__results__item__image' src='${item.image}'></img>`);
             var contentWrapper = $('<div></div>').addClass('auto-suggestion__results__item__content');
