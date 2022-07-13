@@ -1,5 +1,4 @@
 ## Initialization
------
 1. Copy the files in the "auto-suggesstion" folder and import them to the project.
 2. The "auto-suggestion" requires jquery so remember to import the jquery first.
 3. The auto-suggestion could be attached to any input element by calling the script: 
