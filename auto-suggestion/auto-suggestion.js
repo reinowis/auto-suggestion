@@ -6,9 +6,9 @@ function AutoSuggestion(element, options) {
     this._renderItem = options.renderItem || _renderItem;
     this._renderGroup = options.renderGroup || _renderGroup;
     this._renderViewMore = options.renderViewMore || _renderViewMore;
+    this._viewMoreUrl = options.viewMoreUrl || '';
     this._customWrapperClasses = options.customWrapperClasses;
     this._key = options.key || 'search';
-    this._viewMoreUrl = options.viewMoreUrl || '';
     this._data = {};
     this._triggered = 0;
     function _renderItem (item, type) {
