@@ -1,4 +1,3 @@
-/*jshint esversion: 6 */
 function AutoSuggestion(element, options) {
     this.element = element;
     this._url = options.url || '';
@@ -9,22 +8,22 @@ function AutoSuggestion(element, options) {
     this._renderViewMore = options.renderViewMore || _renderViewMore;
     this._customWrapperClasses = options.customWrapperClasses;
     this._key = options.key || 'search';
+    this._viewMoreUrl = options.viewMoreUrl || '';
     this._data = {};
     this._triggered = 0;
     function _renderItem (item, type) {
-        const self = this;
-        const itemEle = $('<li></li>');
+        var itemEle = $('<li></li>');
         itemEle.addClass('auto-suggestion__results__item');
-        const itemWrapper = $(`<a class='auto-suggestion__results__item__wrapper' href='${item._url}'></a>`);
+        var itemWrapper = $(`<a class='auto-suggestion__results__item__wrapper' href='${item.url}'></a>`);
         if (type === 'product') {
             itemEle.addClass('auto-suggestion__results__item--image');
-            const contentImage = $(`<img class='auto-suggestion__results__item__image' src='${item.image}'></img>`);
-            const contentWrapper = $('<div></div>').addClass('auto-suggestion__results__item__content');
-            const contentTitle = $('<span></span>').addClass('auto-suggestion__results__item__title').text(item.title);
+            var contentImage = $(`<img class='auto-suggestion__results__item__image' src='${item.image}'></img>`);
+            var contentWrapper = $('<div></div>').addClass('auto-suggestion__results__item__content');
+            var contentTitle = $('<span></span>').addClass('auto-suggestion__results__item__title').text(item.title);
             contentWrapper.append(contentTitle);
-            const contentBrand = $('<span></span>').addClass('auto-suggestion__results__item__subtitle').text(item.brand);
+            var contentBrand = $('<span></span>').addClass('auto-suggestion__results__item__subtitle').text(item.brand);
             contentWrapper.append(contentBrand);
-            const contentPrice = $('<span></span>').addClass('auto-suggestion__results__item__price').text(item.price);
+            var contentPrice = $('<span></span>').addClass('auto-suggestion__results__item__price').text(item.price);
             contentWrapper.append(contentPrice);
             itemWrapper.append(contentImage).append(contentWrapper);
         } else {
@@ -35,37 +34,30 @@ function AutoSuggestion(element, options) {
     
     }
     
-    function _renderGroup (title, data) {
-        const self = this;
-        const group = $('<div></div>');
+    function _renderGroup (title) {
+        var group = $('<div></div>');
         group.addClass('auto-suggestion__results__group');
         
-        const groupTitle = $('<h5></h5>');
+        var groupTitle = $('<h5></h5>');
         groupTitle.addClass('auto-suggestion__results__title');
         groupTitle.text(title);
         group.append(groupTitle);
         
-        const groupContent = $('<ul></ul>')
+        var groupContent = $('<ul items-content></ul>')
         groupContent.addClass('auto-suggestion__results__list');
-        if (typeof data === 'object' && data.length > 0) {
-            data.forEach(function(item) {
-                const itemEle = self._renderItem(item, title);
-                groupContent.append(itemEle);
-            })
-        }
         group.append(groupContent);
         return group;
     }
 
     function _renderViewMore () {
-        const viewMoreEle = $(`<a href='#'></a>`);
+        var viewMoreEle = $(`<a href='${this._viewMoreUrl}'></a>`);
         viewMoreEle.addClass('auto-suggestion__results__view-more');
         viewMoreEle.text('View all products');
         return viewMoreEle;
     }
 
     this._destroyPopup = function () {
-        const self = this;
+        var self = this;
         if (self._resultsElement) {
             self._resultsElement.remove();
         }
@@ -75,7 +67,7 @@ function AutoSuggestion(element, options) {
     };
 
     this._hidePopup = function () {
-        const self = this;
+        var self = this;
         $(self._resultsElement).css('display', 'none');
         if (self._backgroundElement) {
             self._backgroundElement.remove();
@@ -83,12 +75,12 @@ function AutoSuggestion(element, options) {
     };
     
     this._showPopup = function (popup) {
-        const self = this;
+        var self = this;
         $(self._resultsElement).css('display', 'block');
     };
     
     this._displayPopup = function (popup) {
-        const self = this;
+        var self = this;
         if (self._resultsElement) {
             $(self._resultsElement).css({
                 position: 'fixed',
@@ -104,15 +96,21 @@ function AutoSuggestion(element, options) {
     
     
     this._renderData = function() {
-        const self = this;
-        const results = $(`<div></div>`);
+        var self = this;
+        var results = $(`<div></div>`);
         results.addClass('auto-suggestion__results');
         if (this._customWrapperClasses) {
             results.addClass(this._customWrapperClasses);
         }
         Object.keys(self._data).forEach(function(key) {
             if (self._blocks.includes(key)) {
-                const groupEle = self._renderGroup(key, self._data[key]);
+                var groupEle = self._renderGroup(key);
+                if (Array.isArray(self._data[key]) && $(groupEle).children('[items-content]').length > 0) {
+                    self._data[key].forEach(function (item){
+                        var itemEle = self._renderItem(item, key);
+                        $(groupEle).children('[items-content]').append(itemEle);
+                    });
+                }
                 results.append(groupEle);
             }
         });
@@ -131,7 +129,7 @@ function AutoSuggestion(element, options) {
     };
     
     this._triggerData = function () {
-        const self = this;
+        var self = this;
         $.ajax({
             type: "get",
             url: self._url,
@@ -156,7 +154,7 @@ function AutoSuggestion(element, options) {
         this.element.val('');
     };
     this._toggleClearButton = function (toggle = false) {
-        const self = this;
+        var self = this;
         if (String(self.element.val()).length > 0 && toggle) {
             $(self._clearButton).css('display', 'block');
         } else {
@@ -166,9 +164,9 @@ function AutoSuggestion(element, options) {
 
     };
     this._registerEvents = function() {
-        const self = this;
+        var self = this;
         this.element.on('keyup', function(evt) {
-            const specialKeys = ['Backspace'];
+            var specialKeys = ['Backspace'];
             if (self._triggered >= self._triggerNoKey - 1 || specialKeys.includes(evt.originalEvent.key)) {
                 self._triggered = 0;
                 self._triggerData();
@@ -199,7 +197,7 @@ function AutoSuggestion(element, options) {
         });
     };
     this._initInput = function() {
-        const self = this;
+        var self = this;
         self.element.addClass('auto-suggesstion__input');
         self._wrapElement = $(`<div class='auto-suggestion__wrapper'></div>`);
         self.element.wrap(self._wrapElement);
